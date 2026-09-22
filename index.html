@@ -1,619 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boon Kiat | CS Freshman Portfolio</title>
-    <style>
-        :root {
-            --bg: #eceae3;
-            --sidebar-bg: #d8d5ca;
-            --card-bg: #e3e0d6;
-            --card-border: #cdc9bc;
-            --text-main: #33312e;
-            --text-muted: #6e6b63;
-            --accent: #5e6653;
-            --accent-soft: #d3d7ca;
-        }
-
-        [data-theme="dark"] {
-            --bg: #0f172a;
-            --sidebar-bg: #1e293b;
-            --card-bg: #1e293b;
-            --card-border: #334155;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #38bdf8;
-            --accent-soft: #0369a133;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Navigation & Widgets */
-        aside {
-            width: 260px;
-            background-color: var(--sidebar-bg);
-            padding: 2rem 1.25rem;
-            border-right: 1px solid var(--card-border);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            justify-content: space-between;
-            overflow-y: auto;
-        }
-
-        .profile-section {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .profile-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #bebbb1;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        nav ul {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
-
-        nav li {
-            margin-bottom: 0.5rem;
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: block;
-            padding: 0.4rem 0.75rem;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--text-main);
-            background-color: var(--card-bg);
-            font-weight: 500;
-        }
-
-        /* Mini-Game Widget Styles */
-        .minigame-box {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 0.85rem;
-            margin-bottom: 1rem;
-            font-size: 0.8rem;
-        }
-
-        .minigame-box h4 {
-            font-size: 0.85rem;
-            margin-bottom: 0.35rem;
-            color: var(--accent);
-        }
-
-        .minigame-box p {
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-size: 0.75rem;
-        }
-
-        .game-input-group {
-            display: flex;
-            gap: 0.35rem;
-            margin-bottom: 0.35rem;
-        }
-
-        .game-input-group input {
-            width: 100%;
-            padding: 0.25rem 0.5rem;
-            background-color: var(--bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .game-input-group button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .game-input-group button:hover {
-            opacity: 0.9;
-        }
-
-        #gameMessage {
-            font-weight: 500;
-            color: var(--text-main);
-            min-height: 1.2rem;
-            font-size: 0.75rem;
-        }
-
-        .sidebar-bottom {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .theme-toggle-btn {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .theme-toggle-btn:hover {
-            border-color: var(--accent);
-        }
-
-        /* Main Content */
-        main {
-            margin-left: 260px;
-            flex: 1;
-            padding: 3rem 4rem;
-            max-width: 1000px;
-        }
-
-        header {
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-top: 0.25rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .bio {
-            color: var(--text-muted);
-            max-width: 600px;
-            font-size: 0.95rem;
-        }
-
-        .social-links {
-            margin-top: 1.5rem;
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .social-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            background-color: var(--card-bg);
-            padding: 0.4rem 0.9rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid var(--card-border);
-            transition: all 0.2s;
-        }
-
-        .social-links a:hover {
-            border-color: var(--accent);
-            background-color: var(--accent-soft);
-        }
-
-        section {
-            margin-bottom: 3.5rem;
-        }
-
-        h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-            color: var(--text-main);
-            letter-spacing: -0.01em;
-        }
-
-        /* Interactive Filter Bar */
-        .filter-bar {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background-color: var(--accent-soft);
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 1rem;
-        }
-
-        .skill-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-main);
-            transition: transform 0.2s ease, border-color 0.2s;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-
-        /* Projects Layout */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease, opacity 0.3s;
-        }
-
-        .project-card.hidden {
-            display: none;
-        }
-
-        .project-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .project-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.25rem;
-            flex-wrap: wrap;
-        }
-
-        .project-tags span {
-            font-size: 0.75rem;
-            background-color: var(--accent-soft);
-            color: var(--accent);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-
-        .project-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-
-        .project-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Coursework Table */
-        .coursework-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            overflow: hidden;
-            font-size: 0.9rem;
-        }
-
-        .coursework-table th, .coursework-table td {
-            padding: 0.85rem 1.25rem;
-            text-align: left;
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        .coursework-table th {
-            background-color: rgba(0,0,0,0.02);
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .coursework-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        footer {
-            margin-top: 4rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--card-border);
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-            aside {
-                width: 100%;
-                height: auto;
-                position: relative;
-                border-right: none;
-                border-bottom: 1px solid var(--card-border);
-                padding: 1.5rem;
-            }
-            main {
-                margin-left: 0;
-                padding: 2rem 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Boon Kiat — Computer Science freshman at the National University of Singapore. Exploring software, building practical projects, and learning in public.">
+  <meta name="theme-color" content="#f6f4ee">
+  <meta property="og:title" content="Boon Kiat — Curious mind. Practical code.">
+  <meta property="og:description" content="A Computer Science student's collection of projects, experiments, and things learned along the way.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tsukyi.github.io/">
+  <title>Boon Kiat — Curious mind. Practical code.</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="theme.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <aside>
-        <div class="profile-section">
-            <div class="profile-img">BK</div>
-            <nav>
-                <ul>
-                    <li><a href="#about" class="active">Profile</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#coursework">Coursework</a></li>
-                </ul>
-            </nav>
-
-            <!-- Mini-Game Widget -->
-            <div class="minigame-box">
-                <h4>Mini Game: Guess 1-10</h4>
-                <p>Guess my secret number!</p>
-                <div class="game-input-group">
-                    <input type="number" id="guessInput" min="1" max="10" placeholder="#">
-                    <button id="guessBtn">Guess</button>
-                </div>
-                <div id="gameMessage"></div>
-            </div>
-        </div>
-
-        <div class="sidebar-bottom">
-            <button class="theme-toggle-btn" id="themeToggle">🌓 Toggle Theme</button>
-        </div>
-    </aside>
-
-    <main>
-        <header id="about">
-            <h1>Boon Kiat</h1>
-            <div class="subtitle">Computer Science Freshman @ National University of Singapore</div>
-            <p class="bio">Passionate about software development, data structures, and building practical applications. Currently mastering Python and C++ while exploring web development.</p>
-            <div class="social-links">
-                <a href="https://github.com/Tsukyi" target="_blank">GitHub</a>
-                <a href="https://www.linkedin.com/in/seng-boon-kiat-4a81662b1/" target="_blank">LinkedIn</a>
-                <a href="mailto:bseng@u.nus.edu">Email</a>
-            </div>
-        </header>
-
-        <section id="skills">
-            <h2>Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">Python</div>
-                <div class="skill-card">C++</div>
-                <div class="skill-card">HTML/CSS</div>
-                <div class="skill-card">Git</div>
-                <div class="skill-card">VS Code</div>
-                <div class="skill-card">Linux</div>
-            </div>
-        </section>
-
-        <section id="projects">
-            <h2>Projects</h2>
-            
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="python">Python</button>
-                <button class="filter-btn" data-filter="web">Web</button>
-                <button class="filter-btn" data-filter="cli">CLI</button>
-            </div>
-
-            <div class="projects-grid">
-                <div class="project-card" data-category="python cli">
-                    <div>
-                        <h3>Habitz</h3>
-                        <p>A Python CLI application designed to track habits and expenses, with features to generate financial summaries in CSV format.</p>
-                        <div class="project-tags">
-                            <span>Python</span> <span>File I/O</span> <span>CLI</span>
-                        </div>
-                    </div>
-                    <a href="https://github.com/Tsukyi/Habitz" class="project-link" target="_blank">View Repository →</a>
-                </div>
-
-                <div class="project-card" data-category="web">
-                    <div>
-                        <h3>Portfolio Website</h3>
-                        <p>A minimalist single-page portfolio built using semantic HTML and CSS to showcase coursework and personal programming projects.</p>
-                        <div class="project-tags">
-                            <span>HTML5</span> <span>CSS3</span> <span>GitHub Pages</span>
-                        </div>
-                    </div>
-                    <a href="https://github.com/Tsukyi/Tsukyi.github.io" class="project-link" target="_blank">View Repository →</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="coursework">
-            <h2>Relevant Coursework</h2>
-            <table class="coursework-table">
-                <thead>
-                    <tr>
-                        <th>Course Code</th>
-                        <th>Course Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>CS 101</strong></td>
-                        <td>Introduction to Computer Science (Python)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>CS 102</strong></td>
-                        <td>Data Structures & Functional Programming</td>
-                    </tr>
-                    <tr>
-                        <td><strong>MATH 201</strong></td>
-                        <td>Discrete Mathematics</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <footer>
-            <p>© 2026 Boon Kiat. Hosted on GitHub Pages | NUS Singapore</p>
-        </footer>
-    </main>
-
-    <script>
-        // Dark/Light Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme');
-
-        if (currentTheme) {
-            document.documentElement.setAttribute('data-theme', currentTheme);
-        }
-
-        themeToggle.addEventListener('click', () => {
-            let theme = document.documentElement.getAttribute('data-theme');
-            if (theme === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-
-        // Interactive Project Filter Script
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const filter = btn.getAttribute('data-filter');
-
-                projectCards.forEach(card => {
-                    const categories = card.getAttribute('data-category');
-                    if (filter === 'all' || categories.includes(filter)) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            });
-        });
-
-        // Mini-Game Logic: Guess the Number
-        let secretNumber = Math.floor(Math.random() * 10) + 1;
-        const guessInput = document.getElementById('guessInput');
-        const guessBtn = document.getElementById('guessBtn');
-        const gameMessage = document.getElementById('gameMessage');
-
-        guessBtn.addEventListener('click', () => {
-            const userGuess = parseInt(guessInput.value);
-
-            if (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
-                gameMessage.textContent = "Enter a number 1-10!";
-                gameMessage.style.color = "var(--accent)";
-                return;
-            }
-
-            if (userGuess === secretNumber) {
-                gameMessage.textContent = "🎉 Correct! You win!";
-                gameMessage.style.color = "#10b981"; // success green
-                setTimeout(() => {
-                    secretNumber = Math.floor(Math.random() * 10) + 1;
-                    guessInput.value = "";
-                    gameMessage.textContent = "New number generated!";
-                }, 2500);
-            } else if (userGuess < secretNumber) {
-                gameMessage.textContent = "Too low! Try higher.";
-                gameMessage.style.color = "var(--text-muted)";
-            } else {
-                gameMessage.textContent = "Too high! Try lower.";
-                gameMessage.style.color = "var(--text-muted)";
-            }
-        });
-    </script>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="#about" aria-label="Boon Kiat home">bk<span class="brand-asterisk">✳</span><span class="wordmark-caption">BOON KIAT<br>STUDENT &amp; BUILDER</span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="#projects">Selected work <span>02</span></a><a href="#skills">About &amp; skills</a><a href="#coursework">Learning</a></nav>
+    <div class="header-controls"><button class="command-trigger" id="command-trigger" aria-label="Open quick navigation" title="Quick navigation (Ctrl or Command K)"><span>Quick jump</span><kbd>⌘ K</kbd></button><button class="theme-toggle icon-button" id="theme-toggle" aria-label="Switch to dark theme" title="Switch theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.8 8.8 0 0 1 10 3.5 8.8 8.8 0 1 0 20.5 14Z"/></svg></button><button class="menu-toggle icon-button" id="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button></div>
+  </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="#projects">Selected work <span>↗</span></a><a href="#skills">About &amp; skills <span>↗</span></a><a href="#coursework">Learning <span>↗</span></a><a href="#contact">Say hello <span>↗</span></a></nav>
+  <main id="main">
+    <section class="hero section-shell" id="about" aria-labelledby="hero-title">
+      <div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> BOON KIAT · NUS COMPUTER SCIENCE</div><h1 id="hero-title">Curiosity,<br>turned into<br><em>code.</em><span class="title-period">*</span></h1><p class="hero-description">Hey, I’m Boon Kiat. A CS freshman learning how things work — and building things to find out.</p><div class="hero-actions"><a class="button button-dark" href="#projects">Explore my work <span>↗</span></a><a class="underlined-link" href="mailto:bseng@u.nus.edu">Let’s talk <span>↗</span></a></div><div class="hero-footnote"><span class="small-cross">+</span> A work in progress. Just like me.</div></div>
+      <div class="hero-art" id="hero-art" aria-label="Abstract illustration of ideas taking shape as layered geometric structures">
+        <div class="art-topline"><span>FIELD NOTES — 001</span><span>IDEA → ITERATION</span></div>
+        <div class="art-grid" aria-hidden="true"></div>
+        <div class="art-orbit orbit-one" aria-hidden="true"></div><div class="art-orbit orbit-two" aria-hidden="true"></div>
+        <div class="sculpture" aria-hidden="true">
+          <svg viewBox="0 0 520 520" fill="none"><defs><linearGradient id="top" x1="110" y1="100" x2="400" y2="300" gradientUnits="userSpaceOnUse"><stop stop-color="#ffb37a"/><stop offset="1" stop-color="#f16a39"/></linearGradient><linearGradient id="left" x1="100" y1="190" x2="250" y2="400" gradientUnits="userSpaceOnUse"><stop stop-color="#f5844d"/><stop offset="1" stop-color="#bd412c"/></linearGradient><linearGradient id="right" x1="400" y1="190" x2="250" y2="400" gradientUnits="userSpaceOnUse"><stop stop-color="#e46536"/><stop offset="1" stop-color="#8e3025"/></linearGradient><linearGradient id="pale" x1="100" y1="100" x2="400" y2="420"><stop stop-color="#e9ddc6"/><stop offset="1" stop-color="#c7bba7"/></linearGradient><filter id="shadow"><feGaussianBlur stdDeviation="13"/></filter></defs>
+          <ellipse cx="265" cy="425" rx="140" ry="30" fill="#593e292b" filter="url(#shadow)"/>
+          <g class="slab slab-bottom"><path d="m102 305 158-88 158 88-158 91Z" fill="url(#pale)"/><path d="m102 305 158 91v36l-158-91Z" fill="#b8ae9d"/><path d="m260 396 158-91v36l-158 91Z" fill="#9a9284"/><path d="m102 305 158-88 158 88-158 91Z" stroke="#fff5dc" stroke-opacity=".45"/></g>
+          <g class="slab slab-middle"><path d="m102 223 158-90 158 90-158 90Z" fill="url(#top)"/><path d="m102 223 158 90v45l-158-90Z" fill="url(#left)"/><path d="m260 313 158-90v45l-158 90Z" fill="url(#right)"/><path d="m160 224 100-57 100 57-100 58Z" stroke="#ffc38e" stroke-width="1.2"/><path d="m210 223 50-28 50 28-50 29Z" fill="#b84b2e"/><path d="m210 223 50-28v28l-25 15Z" fill="#742b24"/></g>
+          <g class="slab slab-top"><path d="m145 140 115-66 115 66-115 66Z" fill="#2e3537"/><path d="m145 140 115 66v35l-115-67Z" fill="#222a2c"/><path d="m260 206 115-66v34l-115 67Z" fill="#111d20"/><path d="m185 140 75-44 75 44-75 44Z" stroke="#5b6967"/><path d="m224 140 36-21 36 21-36 20Z" fill="#f78e53"/><path d="m260 119 36 21-36 20Z" fill="#ffb16f"/></g>
+          <path d="M260 38v30M437 233h35M49 233h35" stroke="#7c806f" stroke-width="1"/><circle cx="260" cy="38" r="3" fill="#e87545"/>
+        </svg></div>
+        <span class="art-coordinate coordinate-top">01°18′ N</span><span class="art-coordinate coordinate-bottom">103°46′ E</span>
+        <div class="floating-note note-code"><span class="note-dot"></span><code>while (curious) { build(); }</code></div>
+        <div class="floating-note note-label"><span>THE PROCESS</span><strong>Think. Build.<br>Learn. Repeat.</strong><span class="note-arrow">↗</span></div>
+        <div class="art-bottomline"><span>ALWAYS IN DEVELOPMENT</span><span class="art-plus">+</span></div>
+      </div>
+    </section>
+    <div class="intro-strip section-shell"><span>BASED IN SINGAPORE <span class="tiny-star">✳</span></span><span>LEARNING PYTHON &amp; C++</span><span>EXPLORING THE WEB</span><a href="https://github.com/Tsukyi" target="_blank" rel="noopener noreferrer">FOLLOW THE PROCESS ↗</a></div>
+    <section class="work-section section-shell" id="projects" aria-labelledby="projects-heading">
+      <div class="section-heading reveal"><div><span class="eyebrow section-index">01 / SELECTED WORK</span><h2 id="projects-heading">Ideas made <em>tangible.</em></h2></div><p>Small projects. Real problems.<br>A little more learned with every build.</p></div>
+      <div class="project-toolbar reveal"><div class="project-filters" role="group" aria-label="Filter projects"><button class="filter-button active" data-filter="all" aria-pressed="true">All work <span>02</span></button><button class="filter-button" data-filter="python" aria-pressed="false">Python</button><button class="filter-button" data-filter="web" aria-pressed="false">Web</button><button class="filter-button" data-filter="cli" aria-pressed="false">CLI</button></div><span class="project-count" id="project-count" aria-live="polite">2 projects</span></div>
+      <div class="projects-grid">
+        <article class="project-card reveal" data-category="python cli">
+          <a class="project-visual habitz-visual" href="https://github.com/Tsukyi/Habitz" target="_blank" rel="noopener noreferrer" aria-label="View Habitz repository"><span class="project-visual-label">PYTHON / COMMAND LINE</span><span class="project-open" aria-hidden="true">↗</span><div class="terminal-preview" aria-hidden="true"><div class="terminal-top"><div><i></i><i></i><i></i></div><span>habitz — ~/daily-life</span><span>⌘</span></div><div class="terminal-content"><p><span class="terminal-muted">~</span> <span class="terminal-green">$</span> python habitz.py</p><div class="terminal-title">habitz<span>_</span></div><p class="terminal-muted">A little structure for everyday life.</p><div class="terminal-rule"></div><p><span class="terminal-green">01</span> &nbsp; Track habits</p><p><span class="terminal-green">02</span> &nbsp; Log expenses</p><p><span class="terminal-green">03</span> &nbsp; Export a CSV summary</p><p class="terminal-prompt"><span class="terminal-green">›</span> What’s next? <span class="cursor-block"></span></p></div></div><span class="preview-caption">A visual sketch of the project</span></a>
+          <div class="project-info"><div class="project-title-row"><h3>Habitz</h3><span class="project-number">/ 01</span></div><p>A little order in the everyday. A Python CLI for tracking habits and expenses, with financial summaries you can export to CSV.</p><div class="project-bottom"><div class="tags"><span>Python</span><span>File I/O</span><span>CLI</span></div><a href="https://github.com/Tsukyi/Habitz" target="_blank" rel="noopener noreferrer" class="project-repo" aria-label="Habitz source code">Source code ↗</a></div></div>
+        </article>
+        <article class="project-card reveal" data-category="web">
+          <a class="project-visual portfolio-visual" href="https://github.com/Tsukyi/Tsukyi.github.io" target="_blank" rel="noopener noreferrer" aria-label="View portfolio website repository"><span class="project-visual-label">DESIGN / DEVELOPMENT</span><span class="project-open" aria-hidden="true">↗</span><div class="browser-preview" aria-hidden="true"><div class="browser-top"><span>● ● ●</span><span>tsukyi.github.io</span><span>↗</span></div><div class="browser-content"><div class="mini-nav"><b>bk<span>✳</span></b><span>Work &nbsp; About &nbsp; Contact</span></div><div class="mini-hero"><div><small>HELLO, WORLD.</small><strong>Curiosity,<br>turned into<br><em>code.</em></strong><span class="mini-button">Explore my work ↗</span></div><div class="mini-sculpture"><i></i><i></i><i></i></div></div><div class="mini-footer">A WORK IN PROGRESS. JUST LIKE ME. <span>↘</span></div></div></div><span class="preview-caption">You’re looking at the latest iteration</span></a>
+          <div class="project-info"><div class="project-title-row"><h3>A place on the internet</h3><span class="project-number">/ 02</span></div><p>My own little corner of the web. A responsive portfolio for projects, coursework, and experiments — built to keep evolving.</p><div class="project-bottom"><div class="tags"><span>HTML / CSS</span><span>JavaScript</span><span>GitHub Pages</span></div><a href="https://github.com/Tsukyi/Tsukyi.github.io" target="_blank" rel="noopener noreferrer" class="project-repo" aria-label="Portfolio source code">Source code ↗</a></div></div>
+        </article>
+      </div>
+    </section>
+    <section class="about-section section-shell" id="skills" aria-labelledby="about-heading">
+      <div class="about-copy reveal"><span class="eyebrow section-index">02 / THE PERSON BEHIND THE CODE</span><h2 id="about-heading">Still learning.<br>Always <em>building.</em></h2><p>I’m a Computer Science freshman at the National University of Singapore, interested in software development, data structures, and practical applications.</p><p>Right now, I’m working on my Python and C++ foundations while exploring what I can make for the web. This site is a collection of that process.</p><a href="https://www.linkedin.com/in/seng-boon-kiat-4a81662b1/" target="_blank" rel="noopener noreferrer" class="underlined-link">A little more about me <span>↗</span></a></div>
+      <div class="toolbox reveal"><div class="toolbox-heading"><span class="eyebrow">THE CURRENT TOOLKIT</span><span>↗</span></div><div class="toolkit-grid"><div class="tool"><span class="tool-symbol python-symbol">Py</span><div><strong>Python</strong><small>Scripts &amp; everyday tools</small></div></div><div class="tool"><span class="tool-symbol cpp-symbol">C++</span><div><strong>C++</strong><small>Building the foundations</small></div></div><div class="tool"><span class="tool-symbol web-symbol">&lt;/&gt;</span><div><strong>HTML / CSS</strong><small>Ideas in the browser</small></div></div><div class="tool"><span class="tool-symbol git-symbol">↗</span><div><strong>Git</strong><small>One commit at a time</small></div></div><div class="tool"><span class="tool-symbol editor-symbol">⌘</span><div><strong>VS Code</strong><small>The daily workspace</small></div></div><div class="tool"><span class="tool-symbol linux-symbol">~</span><div><strong>Linux</strong><small>Under the hood</small></div></div></div><div class="toolbox-footer"><span class="live-dot"></span> Toolbox is always growing.</div></div>
+    </section>
+    <section class="learning-section section-shell" id="coursework" aria-labelledby="learning-heading">
+      <div class="section-heading reveal"><div><span class="eyebrow section-index">03 / UNDER CONSTRUCTION</span><h2 id="learning-heading">A student of <em>the craft.</em></h2></div><p>Connecting the theory in the classroom<br>to the things I build outside it.</p></div>
+      <div class="learning-grid"><div class="course-list reveal"><div class="course-list-label"><span>COURSEWORK</span><span>THE FOUNDATIONS</span></div><article class="course"><span class="course-index">01</span><div><span class="course-code">CS 101</span><h3>Introduction to Computer Science</h3><p>Python</p></div><span class="course-arrow" aria-hidden="true">↗</span></article><article class="course"><span class="course-index">02</span><div><span class="course-code">CS 102</span><h3>Data Structures &amp; Functional Programming</h3></div><span class="course-arrow" aria-hidden="true">↗</span></article><article class="course"><span class="course-index">03</span><div><span class="course-code">MATH 201</span><h3>Discrete Mathematics</h3></div><span class="course-arrow" aria-hidden="true">↗</span></article></div>
+      <aside class="playground reveal" aria-labelledby="game-heading"><div class="playground-label"><span class="live-dot"></span> A SMALL DETOUR <span>✳</span></div><h3 id="game-heading">Feeling <em>lucky?</em></h3><p>I’m thinking of a number from 1 to 10.<br>How quickly can you find it?</p><form id="guess-form" class="guess-form"><label class="sr-only" for="guess-input">Your guess, a whole number from 1 to 10</label><input id="guess-input" type="number" min="1" max="10" step="1" required placeholder="1–10" inputmode="numeric" autocomplete="off"><button type="submit" id="guess-button" aria-label="Submit guess">Take a guess <span>→</span></button></form><div class="game-result" id="game-message" role="status" aria-live="polite">A little logic. A little luck.</div><div class="game-footer"><span id="game-attempts">0 attempts</span><span id="game-best">Best: —</span><button id="game-reset" type="button">New round ↻</button></div></aside></div>
+    </section>
+    <section class="contact-section section-shell reveal" id="contact" aria-labelledby="contact-heading"><div class="contact-top"><span class="eyebrow section-index">04 / START A CONVERSATION</span><span class="contact-asterisk" aria-hidden="true">✳</span></div><h2 id="contact-heading">Good things start<br>with a <em>hello.</em></h2><div class="contact-bottom"><p>A project idea, a question, or just saying hi?<br>I’d love to hear from you.</p><div class="contact-actions"><a class="button button-dark" href="mailto:bseng@u.nus.edu">bseng@u.nus.edu <span>↗</span></a><button class="copy-button" id="copy-email" aria-label="Copy email address" title="Copy email address"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg></button></div></div></section>
+  </main>
+  <footer class="site-footer section-shell"><div class="footer-top"><a class="wordmark" href="#about" aria-label="Back to top">bk<span class="brand-asterisk">✳</span></a><div class="footer-links"><a href="https://github.com/Tsukyi" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/seng-boon-kiat-4a81662b1/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="mailto:bseng@u.nus.edu">Email ↗</a></div><a class="back-to-top" href="#about">Back to top ↑</a></div><div class="footer-bottom"><span>© <span id="year">2026</span> Boon Kiat. Made with curiosity.</span><span class="singapore-time"><span class="live-dot"></span> SINGAPORE <time id="singapore-time">UTC+8</time></span><span>BUILT ON GITHUB PAGES</span></div></footer>
+  <dialog class="command-dialog" id="command-dialog" aria-labelledby="command-title"><div class="command-heading"><h2 id="command-title">Where to?</h2><button id="command-close" aria-label="Close quick navigation">Esc <span>×</span></button></div><label class="sr-only" for="command-search">Search navigation</label><input id="command-search" type="search" placeholder="Find a section or action…" autocomplete="off"><div class="command-results" id="command-results"><a href="#about" data-command="about home profile boon kiat">Profile <span>01 ↵</span></a><a href="#projects" data-command="projects work habitz portfolio">Selected work <span>02 ↵</span></a><a href="#skills" data-command="skills toolkit about">About &amp; skills <span>03 ↵</span></a><a href="#coursework" data-command="learning coursework game">Learning &amp; playground <span>04 ↵</span></a><a href="#contact" data-command="contact email hello">Say hello <span>05 ↵</span></a><button id="command-theme" data-command="theme dark light appearance">Switch colour theme <span>◐</span></button></div><p id="command-empty" hidden>No matches. Try “projects” or “contact”.</p><div class="command-help">↑ ↓ to browse <span>Enter to open · Esc to close</span></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
