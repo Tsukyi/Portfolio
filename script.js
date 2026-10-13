@@ -38,6 +38,13 @@ $('#menu-toggle').addEventListener('click', () => {
 $$('#mobile-nav a').forEach(link => link.addEventListener('click', closeMenu));
 window.addEventListener('resize', () => { if (window.innerWidth > 720) closeMenu(); }, { passive: true });
 
+// Keep project totals in sync with the cards, including newly added work.
+const projectTotal = $$('.project-card').length;
+$$('[data-project-total]').forEach(element => {
+  element.textContent = String(projectTotal).padStart(2, '0');
+});
+$('#project-count').textContent = `${projectTotal} project${projectTotal === 1 ? '' : 's'}`;
+
 // Filters leave cards in the DOM and keep button state available to screen readers.
 $$('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const filter = button.dataset.filter;
@@ -229,3 +236,4 @@ function singaporeTime() {
 }
 singaporeTime();
 setInterval(() => { if (!document.hidden) singaporeTime(); }, 1000);
+
